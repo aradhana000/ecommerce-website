@@ -1,12 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Product from './Components/Product';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import Cart from './Components/Cart';
+import { Container, Navbar, Nav, Button } from 'react-bootstrap';
+import { FaShoppingCart } from 'react-icons/fa';
 
 
 
-let App = () => {
+
+const App = () => {
+
+  const [showCart, setShowCart] = useState(false);
+
+  const handleCartOpen = () => setShowCart(true);
+  const handleCartClose = () => setShowCart(false);
   return (
     <>
     <Navbar bg="dark" expand="sm" variant="dark">
@@ -18,6 +26,9 @@ let App = () => {
             <Nav.Link href="#about">ABOUT</Nav.Link>
             
           </Nav>
+          <Button variant ="outline-light" onClick={handleCartOpen}>
+            <FaShoppingCart />
+          </Button>
         
          </Container>
 
@@ -31,6 +42,7 @@ let App = () => {
          <Container>
           <Product />
          </Container>
+         <Cart show={showCart} handleClose={handleCartClose} />
           
          
     </>
