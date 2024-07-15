@@ -1,94 +1,50 @@
-import React, {useState} from "react";
+// src/Cart.js
+import React, { useContext } from 'react';
+import { Modal, Button, Container, Row, Col, Image } from 'react-bootstrap';
+import { CartContext } from './CartContext';
 
-import { ListGroup, Modal, Row, Col, Image, Button } from "react-bootstrap";
+const Cart = ({ show, handleClose }) => {
+    const { cart, removeFromCart } = useContext(CartContext);
 
-
-
-const Cart = ({show, handleClose}) => {
-  const [cartItems, setCartItems] = useState([
-
-{
-
-title: 'Colors',
-
-price: 100,
-
-imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-
-quantity: 2,
-
-},
-
-{
-
-title: 'Black and white Colors',
-
-price: 50,
-
-imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-
-quantity: 3,
-
-},
-
-{
-
-title: 'Yellow and Black Colors',
-
-price: 70,
-
-imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-
-quantity: 1,
-
-},
-
-]);
-
-// fun to remove items from cart
-
-const removeItem = (index) => {
-  const newCartItems = cartItems.filter((_, i) => i!== index);
-  setCartItems(newCartItems);
+    return (
+        <Modal show={show} onHide={handleClose} size="lg">
+            <Modal.Header closeButton>
+                <Modal.Title>Shopping Cart</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Container>
+                    {cart.length === 0 ? (
+                        <p>Your cart is empty</p>
+                    ) : (
+                        cart.map((item, index) => (
+                            <Row key={index} className="mb-3">
+                                <Col md={3}>
+                                    <Image src={item.imageUrl} thumbnail />
+                                </Col>
+                                <Col md={6}>
+                                    <h5>{item.title}</h5>
+                                    <p>Price: ${item.price}</p>
+                                    <p>Quantity: {item.quantity}</p>
+                                </Col>
+                                <Col md={3}>
+                                    <Button variant="danger" onClick={() => removeFromCart(item)}>
+                                        Remove
+                                    </Button>
+                                </Col>
+                            </Row>
+                        ))
+                    )}
+                </Container>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    );
 };
 
-return (
-  <Modal show={show} onHide={handleClose}>
-    <Modal.Header closeButton>
-      <Modal.Title>Cart</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      {cartItems.length>0 ? (
-        <ListGroup>
-          {cartItems.map((item,index) => (
-            <ListGroup.Item key = {index}>
-              <Row>
-                <Col xs={4}>
-                <Image src={item.imageUrl} thumbnail />
-                </Col>
-                <Col xs={6}>
-                <h5>{item.title}</h5>
-                <p>Price: ${item.price}</p>
-                <p>Quantity: {item.quantity}</p>
-                </Col>
-                <Col xs={6} className = "text-right">
-                <Button variant="danger" onClick={() => removeItem(index)}>Remove</Button>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      ) : (
-        <p>Your Cart is empty</p>
-      )
-      }
-    </Modal.Body>
-    <Modal.Footer>
-      <Button variant="secondary" onClick={handleClose}>Close</Button>
-    </Modal.Footer>
-  </Modal>
-);
-
-};
 export default Cart;
+
 
