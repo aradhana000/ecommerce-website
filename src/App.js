@@ -1,9 +1,11 @@
 // src/App.js
 import React, { useState, useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Product from './Components/Product';
 import Cart from './Components/Cart';
+import About from './Pages/About';
 import { FaShoppingCart } from 'react-icons/fa';
 import { CartProvider, CartContext } from './Components/CartContext';
 
@@ -15,31 +17,33 @@ const App = () => {
 
     return (
         <CartProvider>
-            <Navbar bg="dark" expand="sm" variant="dark">
-                <Container>
-                    <Nav className="mx-auto">
-                      <Nav.Link href="#home">HOME</Nav.Link>
-                       <Nav.Link href="#store">STORE</Nav.Link>
-                      <Nav.Link href="#about">ABOUT</Nav.Link>
-                        
-                        <Nav.Link onClick={handleShowCart}>
-                            <CartIcon />
-                            
-                        </Nav.Link>
-                    </Nav>
-                </Container>
-            </Navbar>
-            <header className='sub-header bg-secondary text-white py-5'>
+            <Router>
+                <Navbar bg="dark" variant="dark">
+                    <Container>
+                        <Navbar.Brand as={NavLink} to="/">eCommerce</Navbar.Brand>
+                        <Nav className="ml-auto">
+                            <Nav.Link as={NavLink} to="/" exact>Home</Nav.Link>
+                            <Nav.Link as={NavLink} to="/about">About</Nav.Link>
+                            <Nav.Link onClick={handleShowCart}>
+                                <CartIcon />
+                            </Nav.Link>
+                        </Nav>
+                    </Container>
+                </Navbar>
+                <header className='sub-header bg-secondary text-white py-5'>
           <Container className='text-center'>
             <h1>THE GENERICS</h1>
           </Container>
 
          </header>
-            <Container>
-                <h1 className="my-4">Products</h1>
-                <Product />
-            </Container>
-            <Cart show={showCart} handleClose={handleCloseCart} />
+                <Container>
+                    <Routes>
+                        <Route path="/" element={<Product />} />
+                        <Route path="/about" element={<About />} />
+                    </Routes>
+                </Container>
+                <Cart show={showCart} handleClose={handleCloseCart} />
+            </Router>
         </CartProvider>
     );
 };
