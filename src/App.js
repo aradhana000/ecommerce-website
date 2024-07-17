@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Product from './Components/Product';
 import Cart from './Components/Cart';
 import About from './Pages/About';
+import Home from './Pages/Home';
 import { FaShoppingCart } from 'react-icons/fa';
 import { CartProvider, CartContext } from './Components/CartContext';
 
@@ -30,15 +31,10 @@ const App = () => {
                         </Nav>
                     </Container>
                 </Navbar>
-                <header className='sub-header bg-secondary text-white py-5'>
-          <Container className='text-center'>
-            <h1>THE GENERICS</h1>
-          </Container>
-
-         </header>
                 <Container>
                     <Routes>
-                        <Route path="/" element={<Product />} />
+                        <Route path="/" element={<Home />} />
+                        <Route path="/products" element={<Product />} />
                         <Route path="/about" element={<About />} />
                     </Routes>
                 </Container>
@@ -61,3 +57,4 @@ const CartIcon = () => {
 };
 
 export default App;
+
